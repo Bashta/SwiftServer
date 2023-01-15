@@ -9,11 +9,14 @@ let package = Package(
     dependencies: [
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
+        .package(url: "https://github.com/binarybirds/swift-html", from: "1.2.0"),
     ],
-    targets: [
+    	targets: [
         .target(
             name: "App",
             dependencies: [
+                .product(name: "SwiftHtml", package: "swift-html"),
+                .product(name: "SwiftSvg", package: "swift-html"),
                 .product(name: "Vapor", package: "vapor")
             ],
             swiftSettings: [
