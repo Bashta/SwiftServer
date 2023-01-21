@@ -7,13 +7,14 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish Docker image
+name: Publish new image and release it on Linode
 
 on:
   push:
     branches: ['release']
 
 jobs:
+  # Action 1:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -40,7 +41,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
+  # Action 2:
   update_ssh_linode:
     name: Telling Linode Server to Update
     needs: "push_to_registry"
