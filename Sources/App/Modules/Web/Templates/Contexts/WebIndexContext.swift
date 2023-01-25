@@ -1,15 +1,9 @@
-//
-//  WebIndexContext.swift
-//  
-//
-//  Created by Erison on 15/01/2023.
-//
+import Foundation
 
 public struct WebIndexContext {
-    
     public let title: String
     
-    public init(title: String, message: String) {
+    public init(title: String) {
         self.title = title
     }
 }
