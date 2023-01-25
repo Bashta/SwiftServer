@@ -1,13 +1,7 @@
-//
-//  WebIndexTemplate.swift
-//  
-//
-//  Created by Erison on 15/01/2023.
-//
-
 import Vapor
 import SwiftHtml
 import SwiftSvg
+
 extension Svg {
     static func menuIcon() -> Svg {
         Svg {
@@ -25,13 +19,17 @@ extension Svg {
         .strokeLinejoin("round")
     }
 }
+
 public struct WebIndexTemplate: TemplateRepresentable {
+
     public var context: WebIndexContext
     var body: Tag
+
     public init(_ context: WebIndexContext, @TagBuilder _ builder: () -> Tag) {
         self.context = context
         self.body = builder()
     }
+
     @TagBuilder
     public func render(_ req: Request) -> Tag {
         Html {
@@ -41,6 +39,7 @@ public struct WebIndexTemplate: TemplateRepresentable {
                 Meta()
                     .name(.viewport)
                     .content("width=device-width, initial-scale=1")
+
                 Link(rel: .shortcutIcon)
                     .href("/images/favicon.ico")
                     .type("image/x-icon")
@@ -70,7 +69,7 @@ public struct WebIndexTemplate: TemplateRepresentable {
                                 Svg.menuIcon()
                             }
                             .for("primary-menu-button")
-                                    Div {
+                            Div {
                                 A("Home")
                                     .href("/")
                                     .class("selected", req.url.path == "/")
@@ -91,6 +90,7 @@ public struct WebIndexTemplate: TemplateRepresentable {
                 Main {
                     body
                 }
+
                 Footer {
                     Section {
                         P {
@@ -104,8 +104,7 @@ public struct WebIndexTemplate: TemplateRepresentable {
                                 .target(.blank)
                             Text(".")
                         }
-                        P("Made with <3 by b4sht4")
-                        P("Pjeshkallata&copy;")
+                        P("myPage &copy; 2020-2022")
                     }
                 }
                 
@@ -117,4 +116,5 @@ public struct WebIndexTemplate: TemplateRepresentable {
         }
         .lang("en-US")
     }
+    
 }
