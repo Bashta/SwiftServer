@@ -1,30 +1,29 @@
 import Vapor
-import SwiftHtml
+import Fluent
+import FluentSQLiteDriver
 
-struct BaseTemplate: TemplateRepresentable {
-    let title: String
-    
-    func render(_ req: Request) -> Tag {
-        Html {
-            Head {
-                Title(title)
-            }
-            Body {
-                H1(title)
-            }
-        }
-    }
-}
-
-// configures your application
 public func configure(_ app: Application) throws {
-    // uncomment to serve files from /Public folder
+    
+    /// setup Fluent with a SQLite database under the Resources directory
+    let dbPath = app.directory.resourcesDirectory + "db.sqlite"
+    app.databases.use(.sqlite(.file(dbPath)), as: .sqlite)
+    
+    /// use the Public directory to serve public files
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     
-    app.routes.get("Hello") { req -> Response in
-        return req.templates.renderHtml(BaseTemplate(title: "Shushu Moza!!!"))
+    /// extend paths to always contain a trailing slash
+    app.middleware.use(ExtendPathMiddleware())
+    
+    /// setup modules
+    let modules: [ModuleInterface] = [
+        WebModule(),
+        BlogModule(),
+    ]
+    for module in modules {
+        try module.boot(app)
     }
-
-    // register routes
-    try routes(app)
+    
+    /// use automatic database migration
+    try app.autoMigrate().wait()
 }
+
