@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Run your Executable",
+            "program": "${workspaceFolder}/test-project/.build/debug/HelloWorld",
+            "args": [],
+            "cwd": "${workspaceFolder}/test-project",
+            "preLaunchTask": "swift-build"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug Run",
+            "program": "${workspaceFolder:SwiftServer}/.build/debug/Run",
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftServer}",
+            "preLaunchTask": "swift: Build Debug Run"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Release Run",
+            "program": "${workspaceFolder:SwiftServer}/.build/release/Run",
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftServer}",
+            "preLaunchTask": "swift: Build Release Run"
+        }
+    ]
+}
